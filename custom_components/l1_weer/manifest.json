@@ -1,0 +1,12 @@
+{
+  "domain": "l1_weer",
+  "name": "L1 Weer & Nieuws",
+  "version": "1.0.0",
+  "documentation": "https://github.com/malosaaa",
+  "issue_tracker": "https://github.com/malosaaa",
+  "dependencies": [],
+  "codeowners": ["@malosaaa"],
+  "requirements": ["beautifulsoup4"],
+  "config_flow": true,
+  "iot_class": "cloud_polling"
+}
