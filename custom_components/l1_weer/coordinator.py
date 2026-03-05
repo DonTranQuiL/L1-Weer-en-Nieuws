@@ -23,6 +23,7 @@ class L1WeerCoordinator(DataUpdateCoordinator):
             _LOGGER,
             name=DOMAIN,
             update_interval=timedelta(minutes=30),
+            always_update=True # FIX 1: Forces UI to update even if data is identical
         )
         self.cache = cache
         self._last_data = initial_data or {}
@@ -59,12 +60,19 @@ class L1WeerCoordinator(DataUpdateCoordinator):
             "User-Agent": random.choice(USER_AGENTS),
             "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9",
             "Accept-Language": "nl-NL,nl;q=0.9",
+            "Cache-Control": "no-cache", # FIX 2: Ask server to bypass CDN cache
+            "Pragma": "no-cache"
         }
         
+        # FIX 2: Create unique timestamps to bust the website cache
+        timestamp = int(datetime.now().timestamp() * 1000)
+        live_weather_url = f"{self.scrape_url}?_={timestamp}"
+        live_news_url = f"https://www.l1nieuws.nl/nieuws?_={timestamp}"
+
         try:
             async with aiohttp.ClientSession(headers=headers) as session:
-                # 1. Fetch the Weather
-                async with session.get(self.scrape_url, timeout=15) as response:
+                # 1. Fetch the Weather using the live URL
+                async with session.get(live_weather_url, timeout=15) as response:
                     if response.status == 429:
                         self.update_interval = timedelta(hours=2)
                         raise UpdateFailed("Rate limited (429)")
@@ -78,10 +86,10 @@ class L1WeerCoordinator(DataUpdateCoordinator):
                     parser = L1WeerParser(html_weer)
                     new_data = parser.extract_data()
 
-                    # 2. Fetch the News (Only if enabled!)
+                    # 2. Fetch the News (Only if enabled!) using the live URL
                     if self.enable_news:
                         try:
-                            async with session.get("https://www.l1nieuws.nl/nieuws", timeout=15) as news_resp:
+                            async with session.get(live_news_url, timeout=15) as news_resp:
                                 if news_resp.status == 200:
                                     html_nieuws = await news_resp.text()
                                     debug_text += f"--- NEWS HTML ---\n{html_nieuws}\n"
@@ -95,6 +103,9 @@ class L1WeerCoordinator(DataUpdateCoordinator):
                         new_data["nieuws"] = []
 
                     self._save_debug_output(debug_text)
+
+                    # FIX 3: Add a fresh timestamp so HA sees the payload as unique and updates the sensor
+                    new_data["laatste_scrape_tijd"] = datetime.now().isoformat()
 
                     if not new_data.get("forecast"):
                         self._save_snapshot(html_weer, "missing_forecast")
