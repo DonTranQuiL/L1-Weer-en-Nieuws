@@ -159,6 +159,8 @@ cards:
         {% endif %}
       {% endfor %}
 ```
+<img width="1097" height="763" alt="{98C58E14-8F25-442F-9D2F-6163CDCCF51F}" src="https://github.com/user-attachments/assets/60dc20de-239f-4a73-a024-9be1f0b7ad9e" />
+
 
 [hacs]: https://hacs.xyz
 [hacs_badge]: https://img.shields.io/badge/HACS-Custom-41BDF5.svg?style=for-the-badge
