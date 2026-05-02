@@ -1,7 +1,9 @@
 # L1 Weer & Nieuws Integration for Home Assistant
 
-[![hacs_badge](https://img.shields.io/badge/HACS-Custom-41BDF5.svg?style=for-the-badge)][hacs]
-[![Project Maintenance][maintenance_badge]](https://github.com/malosaaa/L1-Weer-en-Nieuws)
+[![hacs_badge](https://img.shields.io/badge/HACS-Custom-orange.svg)](https://hacs.xyz/)
+[![Version](https://img.shields.io/github/v/release/DonTranQuiL/l1-weer-en-nieuws?color=blue)](https://github.com/DonTranQuiL/l1-weer-en-nieuws/releases)
+[![Maintained](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/DonTranQuiL/l1-weer-en-nieuws/commits/main)
+[![Home Assistant](https://img.shields.io/badge/Home%20Assistant-2024.5+-blue.svg)](https://www.home-assistant.io/)
 
 This custom component for Home Assistant allows you to monitor up-to-date weather data and the latest news specifically for the Limburg region from [L1 Nieuws](https://www.l1nieuws.nl/). It works by scraping the data directly from the L1 website, providing detailed weather forecasts and news articles without requiring an official API.
 
@@ -162,6 +164,4 @@ cards:
 <img width="1097" height="763" alt="{98C58E14-8F25-442F-9D2F-6163CDCCF51F}" src="https://github.com/user-attachments/assets/60dc20de-239f-4a73-a024-9be1f0b7ad9e" />
 
 
-[hacs]: https://hacs.xyz
-[hacs_badge]: https://img.shields.io/badge/HACS-Custom-41BDF5.svg?style=for-the-badge
-[maintenance_badge]: https://img.shields.io/badge/Maintained%3F-yes-green.svg?style=for-the-badge
+
