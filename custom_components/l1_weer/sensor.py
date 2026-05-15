@@ -54,9 +54,12 @@ class L1WeatherSensor(L1BaseSensor):
         
         # --- 1. Current Weather Attributes ---
         current = data.get("current", {})
-        if "zon" in current: attrs["Zon"] = current["zon"]
-        if "neerslag" in current: attrs["Neerslag"] = current["neerslag"]
-        if "wind" in current: attrs["Wind"] = current["wind"]
+        if "zon" in current: 
+            attrs["Zon"] = current["zon"]
+        if "neerslag" in current: 
+            attrs["Neerslag"] = current["neerslag"]
+        if "wind" in current: 
+            attrs["Wind"] = current["wind"]
         
         # --- 2. Forecast Days ---
         forecasts = data.get("forecast", [])
