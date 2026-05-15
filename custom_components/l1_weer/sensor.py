@@ -68,9 +68,12 @@ class L1WeatherSensor(L1BaseSensor):
             extras = []
             
             # \u2600\uFE0F is Zon, \U0001F327\uFE0F is Regen, \U0001F4A8 is Wind
-            if "zon" in f: extras.append(f"\u2600\uFE0F {f['zon']}")
-            if "neerslag" in f: extras.append(f"\U0001F327\uFE0F {f['neerslag']}")
-            if "wind" in f: extras.append(f"\U0001F4A8 {f['wind']}")
+            if "zon" in f: 
+                extras.append(f"\u2600\uFE0F {f['zon']}")
+            if "neerslag" in f: 
+                extras.append(f"\U0001F327\uFE0F {f['neerslag']}")
+            if "wind" in f: 
+                extras.append(f"\U0001F4A8 {f['wind']}")
             
             if extras:
                 day_text += f" | {' | '.join(extras)}"
