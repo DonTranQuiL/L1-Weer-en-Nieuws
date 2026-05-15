@@ -1,12 +1,19 @@
 {
   "domain": "l1_weer",
   "name": "L1 Weer & Nieuws",
-  "version": "1.0.0",
-  "documentation": "https://github.com/malosaaa",
-  "issue_tracker": "https://github.com/malosaaa",
-  "dependencies": [],
-  "codeowners": ["@malosaaa"],
-  "requirements": ["beautifulsoup4"],
+  "after_dependencies": [],
+  "codeowners": [
+    "@malosaaa"
+  ],
   "config_flow": true,
-  "iot_class": "cloud_polling"
+  "dependencies": [],
+  "documentation": "https://github.com/DonTranQuiL",
+  "integration_type": "service",
+  "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/DonTranQuiL/issues",
+  "quality_scale": "bronze",
+  "requirements": [
+    "beautifulsoup4"
+  ],
+  "version": "1.0.0"
 }
