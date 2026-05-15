@@ -37,10 +37,3 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: custom_components/l1_weer/l1_weer.zip
-
-
-
-
-
-
-          
