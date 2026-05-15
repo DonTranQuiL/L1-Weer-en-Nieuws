@@ -22,9 +22,12 @@ class L1WeerParser:
             rains = [el.get_text(strip=True) for el in rain_elems]
             winds = [el.get_text(" ", strip=True).replace(" / ", "/") for el in wind_elems]
 
-            if len(suns) > 0: data["current"]["zon"] = suns[0]
-            if len(rains) > 0: data["current"]["neerslag"] = rains[0]
-            if len(winds) > 0: data["current"]["wind"] = winds[0]
+            if len(suns) > 0: 
+                data["current"]["zon"] = suns[0]
+            if len(rains) > 0: 
+                data["current"]["neerslag"] = rains[0]
+            if len(winds) > 0: 
+                data["current"]["wind"] = winds[0]
 
             text = self.soup.get_text(separator=" ", strip=True)
             pattern = r"\b(Maandag|Dinsdag|Woensdag|Donderdag|Vrijdag|Zaterdag|Zondag|Ma|Di|Wo|Do|Vr|Za|Zo)\b[^\d]*?(-?\d+[.,]?\d*)\s*(?:\u00b0|C)"
@@ -39,9 +42,12 @@ class L1WeerParser:
                 if day_str not in seen_days:
                     seen_days.add(day_str)
                     forecast_entry = {"day": day_str, "temp": temp_str}
-                    if day_index < len(suns): forecast_entry["zon"] = suns[day_index]
-                    if day_index < len(rains): forecast_entry["neerslag"] = rains[day_index]
-                    if day_index < len(winds): forecast_entry["wind"] = winds[day_index]
+                    if day_index < len(suns): 
+                        forecast_entry["zon"] = suns[day_index]
+                    if day_index < len(rains): 
+                        forecast_entry["neerslag"] = rains[day_index]
+                    if day_index < len(winds): 
+                        forecast_entry["wind"] = winds[day_index]
                     
                     data["forecast"].append(forecast_entry)
                     day_index += 1
