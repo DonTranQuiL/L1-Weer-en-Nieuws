@@ -4,6 +4,7 @@
 [![Version](https://img.shields.io/github/v/release/DonTranQuiL/l1-weer-en-nieuws?color=blue)](https://github.com/DonTranQuiL/l1-weer-en-nieuws/releases)
 [![Maintained](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/DonTranQuiL/l1-weer-en-nieuws/commits/main)
 [![Home Assistant](https://img.shields.io/badge/Home%20Assistant-2024.5+-blue.svg)](https://www.home-assistant.io/)
+[![Discord](https://img.shields.io/badge/Discord-join%20community-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/qaHPTTKHae)
 
 This custom component for Home Assistant allows you to monitor up-to-date weather data and the latest news specifically for the Limburg region from [L1 Nieuws](https://www.l1nieuws.nl/). It works by scraping the data directly from the L1 website, providing detailed weather forecasts and news articles without requiring an official API.
 
