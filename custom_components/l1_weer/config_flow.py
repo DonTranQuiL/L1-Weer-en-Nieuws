@@ -1,7 +1,9 @@
 import voluptuous as vol
 from homeassistant import config_entries
 from homeassistant.core import callback
-from .const import DOMAIN, CONF_ENABLE_NEWS, CONF_DEBUG_MODE
+
+from .const import CONF_DEBUG_MODE, CONF_ENABLE_NEWS, DOMAIN
+
 
 class L1WeerConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     VERSION = 1
@@ -13,10 +15,12 @@ class L1WeerConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         if user_input is not None:
             return self.async_create_entry(title="L1 Weer & Nieuws", data=user_input)
 
-        schema = vol.Schema({
-            vol.Optional(CONF_ENABLE_NEWS, default=True): bool,
-            vol.Optional(CONF_DEBUG_MODE, default=False): bool,
-        })
+        schema = vol.Schema(
+            {
+                vol.Optional(CONF_ENABLE_NEWS, default=True): bool,
+                vol.Optional(CONF_DEBUG_MODE, default=False): bool,
+            }
+        )
 
         return self.async_show_form(step_id="user", data_schema=schema)
 
@@ -24,6 +28,7 @@ class L1WeerConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     @callback
     def async_get_options_flow(config_entry):
         return L1WeerOptionsFlowHandler(config_entry)
+
 
 class L1WeerOptionsFlowHandler(config_entries.OptionsFlow):
     def __init__(self, config_entry):
@@ -36,17 +41,17 @@ class L1WeerOptionsFlowHandler(config_entries.OptionsFlow):
 
         # Pull existing settings or default to True/False
         enable_news = self._config_entry.options.get(
-            CONF_ENABLE_NEWS, 
-            self._config_entry.data.get(CONF_ENABLE_NEWS, True)
+            CONF_ENABLE_NEWS, self._config_entry.data.get(CONF_ENABLE_NEWS, True)
         )
         debug_mode = self._config_entry.options.get(
-            CONF_DEBUG_MODE, 
-            self._config_entry.data.get(CONF_DEBUG_MODE, False)
+            CONF_DEBUG_MODE, self._config_entry.data.get(CONF_DEBUG_MODE, False)
         )
 
-        schema = vol.Schema({
-            vol.Optional(CONF_ENABLE_NEWS, default=enable_news): bool,
-            vol.Optional(CONF_DEBUG_MODE, default=debug_mode): bool,
-        })
+        schema = vol.Schema(
+            {
+                vol.Optional(CONF_ENABLE_NEWS, default=enable_news): bool,
+                vol.Optional(CONF_DEBUG_MODE, default=debug_mode): bool,
+            }
+        )
 
         return self.async_show_form(step_id="init", data_schema=schema)
