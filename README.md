@@ -5,6 +5,8 @@
 [![Maintained](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/DonTranQuiL/l1-weer-en-nieuws/commits/main)
 [![Home Assistant](https://img.shields.io/badge/Home%20Assistant-2024.5+-blue.svg)](https://www.home-assistant.io/)
 [![Discord](https://img.shields.io/badge/Discord-join%20community-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/qaHPTTKHae)
+[![Liberapay patrons](https://img.shields.io/liberapay/patrons/Malosaaa.svg?logo=liberapay)](https://liberapay.com/Malosaaa/donate)
+[![Liberapay goal](https://img.shields.io/liberapay/goal/Malosaaa.svg?logo=liberapay)](https://liberapay.com/Malosaaa/donate)
 
 This custom component for Home Assistant allows you to monitor up-to-date weather data and the latest news specifically for the Limburg region from [L1 Nieuws](https://www.l1nieuws.nl/). It works by scraping the data directly from the L1 website, providing detailed weather forecasts and news articles without requiring an official API.
 
@@ -164,5 +166,10 @@ cards:
 ```
 <img width="1097" height="763" alt="{98C58E14-8F25-442F-9D2F-6163CDCCF51F}" src="https://github.com/user-attachments/assets/60dc20de-239f-4a73-a024-9be1f0b7ad9e" />
 
+***
 
+## Support
 
+Everything here is free and open source. If it saves you time, you can support the work:
+
+<a href="https://ko-fi.com/DonTranQuiL"><img alt="Support me on Ko-fi" src="https://ko-fi.com/img/githubbutton_sm.svg" height="30"></a> <a href="https://liberapay.com/Malosaaa/donate"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg"></a>
