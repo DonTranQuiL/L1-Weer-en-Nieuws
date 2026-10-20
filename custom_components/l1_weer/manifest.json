@@ -2,10 +2,6 @@
   "domain": "l1_weer",
   "name": "L1 Weer & Nieuws",
   "after_dependencies": [],
-  "categories": [
-    "weather_alerts.forecasts",
-    "news_social_media"
-  ],
   "codeowners": [
     "@malosaaa"
   ],
