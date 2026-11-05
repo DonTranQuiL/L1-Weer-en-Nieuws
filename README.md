@@ -26,17 +26,26 @@ This custom component for Home Assistant allows you to monitor up-to-date weathe
 
 ## Installation
 
-### Method 1: HACS (Home Assistant Community Store) - Recommended
+### Method 1: Marketplace (Home Assistant 2026.11 and newer, recommended)
+
+[![Open your Home Assistant instance and open this repository in the Marketplace.](https://my.home-assistant.io/badges/marketplace_repository.svg)](https://my.home-assistant.io/redirect/marketplace_repository/?owner=DonTranQuiL&repository=L1-Weer-en-Nieuws&category=integration)
+
+1. In Home Assistant, go to **Settings > Marketplace** and search for **L1 Weer & Nieuws** (or use the button above).
+2. Open it and select **Install**. The setup starts right away, no restart needed.
+
+> **Not in the Marketplace catalog yet?** L1 Weer & Nieuws is not in the HACS default list yet, so it does not show up in the Marketplace search. Until it is, select **Add from link** in the upper-right corner of the Marketplace, enter `https://github.com/DonTranQuiL/L1-Weer-en-Nieuws`, select **Add**, then open L1 Weer & Nieuws and select **Install**.
+
+### Method 2: HACS (Home Assistant Community Store) - Home Assistant before 2026.11
 
 1.  Ensure you have [HACS](https://hacs.xyz/) installed.
 2.  Go to HACS -> Integrations -> Click the 3-dots menu in the top right -> **Custom Repositories**.
-3.  In the "Repository" field, paste this URL: `https://github.com/malosaaa/L1-Weer-en-Nieuws`
+3.  In the "Repository" field, paste this URL: `https://github.com/DonTranQuiL/L1-Weer-en-Nieuws`
 4.  For "Category", select **Integration**.
 5.  Click **Add**.
 6.  The "L1 Weer & Nieuws" integration will now appear in your HACS integrations list. Click **Install** or **Download**.
 7.  Restart Home Assistant.
 
-### Method 2: Manual Installation
+### Method 3: Manual Installation
 
 1.  Using a file access tool (like Samba or File Editor), navigate to the `custom_components` directory in your Home Assistant `config` folder.
 2.  Create a new folder named `l1_weer`.
