@@ -2,6 +2,11 @@ DOMAIN = "l1_weer"
 URL = "https://www.l1nieuws.nl/weer"
 CACHE_FILE = "l1_weer_cache.json"
 
+# Dashboard card (served from custom_components/l1_weer/frontend)
+VERSION = "1.1.0"
+CARD_FILENAME = "l1-card.js"
+CARD_URL = f"/{DOMAIN}/{CARD_FILENAME}"
+
 # New Configuration Constants
 CONF_ENABLE_NEWS = "enable_news"
 CONF_DEBUG_MODE = "debug_mode"
