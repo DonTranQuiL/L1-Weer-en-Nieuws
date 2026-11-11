@@ -37,6 +37,9 @@ class L1WeerCoordinator(DataUpdateCoordinator):
         self.debug_mode = debug_mode
 
     def _save_snapshot(self, html, reason):
+        # Only write HTML snapshots into /config when debug mode is on
+        if not self.debug_mode:
+            return
         path = self.hass.config.path(f"l1_weer_debug_{reason}.html")
         try:
             with open(path, "w", encoding="utf-8") as f:
