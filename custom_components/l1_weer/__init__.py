@@ -1,16 +1,50 @@
+import hashlib
 import logging
 import os
+from pathlib import Path
 
+from homeassistant.components.frontend import add_extra_js_url
+from homeassistant.components.http import StaticPathConfig
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import Platform
 from homeassistant.core import HomeAssistant, ServiceCall
+from homeassistant.helpers import config_validation as cv
+from homeassistant.helpers.typing import ConfigType
 
 from .cache import PersistentCache
-from .const import CONF_DEBUG_MODE, CONF_ENABLE_NEWS, DEBUG_FILE_NAME, DOMAIN
+from .const import (
+    CARD_FILENAME,
+    CARD_URL,
+    CONF_DEBUG_MODE,
+    CONF_ENABLE_NEWS,
+    DEBUG_FILE_NAME,
+    DOMAIN,
+    VERSION,
+)
 from .coordinator import L1WeerCoordinator
 
 _LOGGER = logging.getLogger(__name__)
 PLATFORMS: list[Platform] = [Platform.SENSOR]
+CONFIG_SCHEMA = cv.config_entry_only_config_schema(DOMAIN)
+
+
+def _file_digest(path: Path) -> str:
+    """Short hash of a file's content (cache busting)."""
+    return hashlib.sha256(path.read_bytes()).hexdigest()[:8]
+
+
+async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
+    """Serve the L1 dashboard card and add it to the frontend once."""
+    card = Path(__file__).parent / "frontend" / CARD_FILENAME
+    await hass.http.async_register_static_paths(
+        [StaticPathConfig(CARD_URL, str(card), True)]
+    )
+    if "frontend" in hass.config.components:
+        digest = await hass.async_add_executor_job(_file_digest, card)
+        add_extra_js_url(hass, f"{CARD_URL}?v={VERSION}-{digest}")
+    else:  # pragma: no cover - frontend is always loaded in a real install
+        _LOGGER.debug("Frontend not loaded, the L1 card is not registered")
+    return True
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:

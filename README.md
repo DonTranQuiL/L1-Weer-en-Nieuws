@@ -3,7 +3,7 @@
 [![hacs_badge](https://img.shields.io/badge/HACS-Custom-orange.svg)](https://hacs.xyz/)
 [![Version](https://img.shields.io/github/v/release/DonTranQuiL/l1-weer-en-nieuws?color=blue)](https://github.com/DonTranQuiL/l1-weer-en-nieuws/releases)
 [![Maintained](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/DonTranQuiL/l1-weer-en-nieuws/commits/main)
-[![Home Assistant](https://img.shields.io/badge/Home%20Assistant-2024.5+-blue.svg)](https://www.home-assistant.io/)
+[![Home Assistant](https://img.shields.io/badge/Home%20Assistant-2024.7+-blue.svg)](https://www.home-assistant.io/)
 [![Discord](https://img.shields.io/badge/Discord-join%20community-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/qaHPTTKHae)
 [![Liberapay patrons](https://img.shields.io/liberapay/patrons/Malosaaa.svg?logo=liberapay)](https://liberapay.com/Malosaaa/donate)
 [![Liberapay goal](https://img.shields.io/liberapay/goal/Malosaaa.svg?logo=liberapay)](https://liberapay.com/Malosaaa/donate)
@@ -72,8 +72,8 @@ The integration creates the following sensors. All predictive data and news arti
 
 | Sensor Name | Entity ID | Description |
 | :--- | :--- | :--- |
-| **Current Temperature** | `sensor.l1_huidige_temperatuur` | Main weather sensor. State is the current temperature in °C. Attributes contain today's conditions (`Zon`, `Neerslag`, `Wind`) and the 5-day forecast (`dag_1_temperatuur`, etc.). |
-| **Latest News** | `sensor.l1_laatste_nieuws` | State is the number of articles found. Attributes contain the top 5 articles (`artikel_1_titel`, `artikel_1_link`, `artikel_1_afbeelding`, etc.). |
+| **Current Temperature** | `sensor.l1_huidige_temperatuur` | Main weather sensor. State is the current temperature in °C. Attributes contain today's conditions (`Zon`, `Neerslag`, `Wind`, `condition`, `temp_min`, `temp_max`, `condition_icon`, `description`) and the 5-day forecast (`dag_1_temperatuur`, `dag_1_min`, `dag_1_zonuren`, `dag_1_neerslag`, `dag_1_windkracht`, ... and a structured `forecast` list). `dag_1` is today. |
+| **Latest News** | `sensor.l1_laatste_nieuws` | State is the number of articles found. Attributes contain the top 5 articles (`artikel_1_titel`, `artikel_1_link`, `artikel_1_afbeelding`, etc.) and the same articles as a `nieuws` list. |
 | **Last Update** | `sensor.l1_weer_laatste_update` | (Diagnostic) Timestamp of the last successful web scrape or "Uit Cache". |
 | **Status** | `sensor.l1_weer_status` | (Diagnostic) Shows "OK" or "Fout" and includes cache usage details in attributes. |
 
@@ -109,71 +109,37 @@ action:
 mode: single
 ```
 
-## Dashboard Card Setup
+## Dashboard Card
 
-Complete your dashboard with these ready-to-use Markdown / Grid cards! 
+The integration ships its own dashboard card, **L1 Weer & Nieuws** (`custom:l1-card`). It is loaded automatically once the integration is set up, so there is no separate frontend download or resource to add. One card shows both the weather and the news, with a **Weer | Nieuws** switch in the header. The card remembers the last view you picked on that device.
 
-*(Note: Double-check that your entity IDs exactly match the ones in your system)*.
+* **Weer**: current temperature with the L1 weather icon and summary, today's min/max, sun, rain and wind, a 5-day forecast (icon, max/min, rain, sun, wind), and the full L1 forecast text that you can fold open.
+* **Nieuws**: the lead story as a large photo with its title, then the other stories as compact rows. Each story opens on l1nieuws.nl in a new tab.
 
-### 📰 News Card
+Add it through **Edit dashboard > Add card > L1 Weer & Nieuws**, or in YAML:
+
 ```yaml
-type: grid
-cards:
-  - type: heading
-    heading: Laatste Nieuws
-  - type: markdown
-    content: >-
-      ## 📰 L1 Laatste Nieuws
-
-      {% set entity = 'sensor.l1_laatste_nieuws' %}
-
-      {% for i in range(1, 6) %} 
-        {% set title = state_attr(entity, 'artikel_' ~ i ~ '_titel') %} 
-        {% set link = state_attr(entity, 'artikel_' ~ i ~ '_link') %} 
-        {% set img = state_attr(entity, 'artikel_' ~ i ~ '_afbeelding') %}
-
-        {% if title %} 
-          <a href="{{ link }}" target="_blank">
-            <img src="{{ img }}" style="width: 100%; border-radius: 12px; margin-bottom: 8px; box-shadow: 0px 4px 10px rgba(0,0,0,0.15);">
-          </a>
-
-          <div style="font-size: 1.15em; font-weight: bold; line-height: 1.3; margin-bottom: 15px;">
-            <a href="{{ link }}" target="_blank" style="text-decoration: none; color: var(--primary-text-color);">
-              {{ title }}
-            </a>
-          </div>
-        {% endif %} 
-      {% endfor %}
+type: custom:l1-card
 ```
 
-### 🌤️ Weather Card
+All options are optional:
+
 ```yaml
-type: grid
-cards:
-  - type: heading
-    heading: Weer
-  - type: markdown
-    content: >-
-      {% set e = 'sensor.l1_huidige_temperatuur' %}
-
-      <div align="center">
-        <h2>🌤️ L1 Weer Limburg</h2>
-        <h1 style="font-size: 3em; margin: 0;">{{ states(e) }}°C</h1>
-      </div>
-
-      <br> Vandaag <br> ☀️ Zon: {{ state_attr(e, 'Zon') }}   🌧️ Regen: {{ state_attr(e, 'Neerslag') }}   💨 Wind: {{ state_attr(e, 'Wind') }}
-
-      ---
-
-      <br> 📅 Verwachting komende dagen
-
-      {% for dag in ['Ma', 'Di', 'Wo', 'Do', 'Vr', 'Za', 'Zo'] %}
-        {% if state_attr(e, dag) != None %}
-      **{{ dag }}:** {{ state_attr(e, dag) }}
-        {% endif %}
-      {% endfor %}
+type: custom:l1-card
+initial_view: weather          # weather or news: what the card shows first
+title: L1 Limburg              # default: "L1 Weer Limburg" / "L1 Laatste Nieuws"
+entity_weather: sensor.l1_huidige_temperatuur
+entity_news: sensor.l1_laatste_nieuws
+max_articles: 5                # 1-10
+show_forecast: true            # 5-day row in the weather view
+show_description: true         # foldable L1 forecast text
 ```
-<img width="1097" height="763" alt="{98C58E14-8F25-442F-9D2F-6163CDCCF51F}" src="https://github.com/user-attachments/assets/60dc20de-239f-4a73-a024-9be1f0b7ad9e" />
+
+If you renamed the sensors, the card finds them by itself; you can also choose them in the card editor.
+
+> After updating the integration, restart Home Assistant once and reload the browser so the new card and parser are used. If the browser still shows the old card, clear its cache.
+
+*(A screenshot of the card will be added here.)*
 
 ***
 
