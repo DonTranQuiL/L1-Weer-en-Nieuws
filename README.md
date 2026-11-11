@@ -139,7 +139,9 @@ If you renamed the sensors, the card finds them by itself; you can also choose t
 
 > After updating the integration, restart Home Assistant once and reload the browser so the new card and parser are used. If the browser still shows the old card, clear its cache.
 
-*(A screenshot of the card will be added here.)*
+![L1 Weer & Nieuws card: Weer and Nieuws views](docs/images/l1-card.png)
+
+*Left: the Weer view. Right: the Nieuws view (same card, switched with the header buttons).*
 
 ***
 
